@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Backend venv (do not commit virtualenv)
+backend/venv/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
