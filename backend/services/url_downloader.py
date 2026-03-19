@@ -78,7 +78,11 @@ def _base_ydl_opts() -> dict:
 
 def extract_url_metadata(url: str) -> dict:
     """Fetch metadata without downloading."""
-    opts = {**_base_ydl_opts(), "skip_download": True}
+    opts = {
+        **_base_ydl_opts(),
+        "skip_download": True,
+        "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
+    }
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=False)
         return {
@@ -96,8 +100,9 @@ def download_audio_from_url(url: str, output_dir: Path) -> DownloadedAudio:
 
     opts = {
         **_base_ydl_opts(),
-        "format": "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio[ext=mp4]/bestaudio/best",
+        "format": "bestaudio/best",
         "outtmpl": output_template,
+        "extractor_args": {"youtube": {"player_client": ["ios", "web"]}},
         "postprocessors": [
             {
                 "key": "FFmpegExtractAudio",
