@@ -51,6 +51,17 @@ class DownloadedAudio:
     thumbnail: Optional[str]
 
 
+def _cookies_file() -> Optional[str]:
+    """Look for cookies.txt next to this file's backend root, or via env YTDLP_COOKIES."""
+    env = os.environ.get("YTDLP_COOKIES")
+    if env and Path(env).exists():
+        return env
+    default = Path(__file__).resolve().parent.parent / "cookies.txt"
+    if default.exists():
+        return str(default)
+    return None
+
+
 def _base_ydl_opts() -> dict:
     opts = {
         "quiet": True,
@@ -59,6 +70,9 @@ def _base_ydl_opts() -> dict:
     loc = _ffmpeg_location()
     if loc:
         opts["ffmpeg_location"] = loc
+    cookies = _cookies_file()
+    if cookies:
+        opts["cookiefile"] = cookies
     return opts
 
 
