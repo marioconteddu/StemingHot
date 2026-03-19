@@ -96,7 +96,7 @@ def download_audio_from_url(url: str, output_dir: Path) -> DownloadedAudio:
 
     opts = {
         **_base_ydl_opts(),
-        "format": "bestaudio/best",
+        "format": "bestaudio[ext=webm]/bestaudio[ext=m4a]/bestaudio[ext=mp4]/bestaudio/best",
         "outtmpl": output_template,
         "postprocessors": [
             {
